@@ -9,11 +9,13 @@ RSpec.describe Race do
   describe '#initialize' do
     it 'can have instance' do
       expect(@race).to be_instance_of(Race)
+
     end
 
     it 'has attributes upon initialization' do
       expect(@race.office).to eq('Texas Governor')
       expect(@race.candidates).to eq([])
+      expect(@race.instance_variable_get(:@open)).to be true
     end
   end
 
@@ -38,6 +40,56 @@ RSpec.describe Race do
       expect(candidate2.name).to eq('Roberto R')
       expect(candidate2.party).to eq(:republican)
       expect(@race.candidates).to eq([candidate1, candidate2])
+    end
+  end
+
+  describe '#open?' do
+    it 'returns bool whether or not race is open or not, default true' do
+      expect(@race.open?).to be true
+    end
+  end
+
+  describe '#close!' do
+    it 'closes the race' do
+      expect(@race.open?).to be true
+      @race.close!
+      expect(@race.open?).to be false
+
+      @race.close!
+      expect(@race.open?).to be false
+    end
+  end
+
+  describe '#winner, #tie?' do
+    before(:each) do
+      @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+      @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+      @candidate3 = @race.register_candidate!({name: "Sam T", party: :democrat})
+      @candidate4 = @race.register_candidate!({name: "Sarah R", party: :republican})
+    end
+
+    it 'only returns result if race is closed' do
+      expect(@race.open?).to be true
+      expect(@race.winner).to be false
+
+      1.times { @candidate1.vote_for! }
+      2.times { @candidate2.vote_for! }
+      4.times { @candidate3.vote_for! }
+    
+      @race.close!
+      expect(@race.open?).to be false
+      
+      expect(@race.winner).to eq([@candidate3])
+    end
+
+    it 'returns array of winners' do
+      1.times { @candidate1.vote_for! }
+      2.times { @candidate2.vote_for! }
+      4.times { @candidate3.vote_for! }
+      4.times { @candidate4.vote_for! }
+      @race.close!
+      
+      expect(@race.winner).to eq([@candidate3, @candidate4])
     end
   end
 end

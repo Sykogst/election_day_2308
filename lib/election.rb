@@ -15,6 +15,7 @@ class Election
 
   def vote_counts
     candidate_votes = {}
+    # I dont like how I did this
     candidates_all = candidates
     candidates_all.each do |candidate|
       candidate_votes[candidate.name] = candidate.votes
