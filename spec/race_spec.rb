@@ -9,11 +9,13 @@ RSpec.describe Race do
   describe '#initialize' do
     it 'can have instance' do
       expect(@race).to be_instance_of(Race)
+
     end
 
     it 'has attributes upon initialization' do
       expect(@race.office).to eq('Texas Governor')
       expect(@race.candidates).to eq([])
+      expect(@race.instance_variable_get(:@open)).to be true
     end
   end
 
@@ -38,6 +40,12 @@ RSpec.describe Race do
       expect(candidate2.name).to eq('Roberto R')
       expect(candidate2.party).to eq(:republican)
       expect(@race.candidates).to eq([candidate1, candidate2])
+    end
+  end
+
+  describe '#open?' do
+    xit 'returns bool whether or not race is open or not, default true' do
+      
     end
   end
 end

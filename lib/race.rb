@@ -5,6 +5,7 @@ class Race
   def initialize(office)
     @office = office
     @candidates = []
+    @open = true
   end
 
   def register_candidate!(candidate_info)
