@@ -21,4 +21,12 @@ class Race
   def close!
     @open = false
   end
+
+  def winner
+    if !open?
+      @candidates.max(1) { |candidate| candidate.votes }
+    else
+      false
+    end
+  end
 end
