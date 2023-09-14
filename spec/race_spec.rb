@@ -12,7 +12,7 @@ RSpec.describe Race do
     end
 
     it 'has attributes upon initialization' do
-      expect(@race.office).to eq('Texas Governer')
+      expect(@race.office).to eq('Texas Governor')
       expect(@race.candidates).to eq([])
     end
   end
