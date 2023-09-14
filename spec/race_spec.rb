@@ -60,7 +60,7 @@ RSpec.describe Race do
     end
   end
 
-  describe '#winner' do
+  describe '#winner, #tie?' do
     before(:each) do
       @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
       @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
@@ -80,6 +80,16 @@ RSpec.describe Race do
       expect(@race.open?).to be false
       
       expect(@race.winner).to eq([@candidate3])
+    end
+
+    it 'returns array of winners' do
+      1.times { @candidate1.vote_for! }
+      2.times { @candidate2.vote_for! }
+      4.times { @candidate3.vote_for! }
+      4.times { @candidate4.vote_for! }
+      @race.close!
+      
+      expect(@race.winner).to eq([@candidate3, @candidate4])
     end
   end
 end

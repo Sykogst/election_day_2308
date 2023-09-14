@@ -23,10 +23,12 @@ class Race
   end
 
   def winner
-    if !open?
-      @candidates.max(1) { |candidate| candidate.votes }
-    else
-      false
-    end
+    vote_counts = @candidates.map { |candidate| candidate.votes }
+    num_winners = vote_counts.length - vote_counts.uniq.length + 1
+    !open? ? @candidates.max_by(num_winners) { |candidate| candidate.votes } : false
+  end
+
+  def tie?
+    true if winner.length > 1
   end
 end
