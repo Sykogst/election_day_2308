@@ -44,8 +44,8 @@ RSpec.describe Race do
   end
 
   describe '#open?' do
-    xit 'returns bool whether or not race is open or not, default true' do
-      
+    it 'returns bool whether or not race is open or not, default true' do
+      expect(@race.open?).to be true
     end
   end
 end

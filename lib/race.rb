@@ -13,4 +13,8 @@ class Race
     @candidates << new_candidate
     new_candidate
   end
+
+  def open?
+    @open
+  end
 end
