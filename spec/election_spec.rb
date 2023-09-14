@@ -64,7 +64,7 @@ RSpec.describe Election do
       
       @candidate1.vote_for!
       4.times {@candidate4.vote_for!}
-      expect(@election_2023.vote_counts).to eq({@candidate1.name => 1, @candidate2.name => 0, @candidate3.name => 0, @candidate4.name => 0})
+      expect(@election_2023.vote_counts).to eq({@candidate1.name => 1, @candidate2.name => 0, @candidate3.name => 0, @candidate4.name => 4})
     end
   end
 end
