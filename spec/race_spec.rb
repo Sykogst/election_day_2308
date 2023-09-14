@@ -59,4 +59,27 @@ RSpec.describe Race do
       expect(@race.open?).to be false
     end
   end
+
+  describe '#winner' do
+    before(:each) do
+      @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+      @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+      @candidate3 = @race.register_candidate!({name: "Sam T", party: :democrat})
+      @candidate4 = @race.register_candidate!({name: "Sarah R", party: :republican})
+    end
+
+    it 'only returns result if race is closed' do
+      expect(@race.open?).to be true
+      expect(@race.winner).to be false
+
+      1.times { @candidate1.vote_for! }
+      2.times { @candidate2.vote_for! }
+      4.times { @candidate3.vote_for! }
+    
+      @race.close!
+      expect(@race.open?).to be false
+      
+      expect(@race.winner).to eq(@candidate3)
+    end
+  end
 end
