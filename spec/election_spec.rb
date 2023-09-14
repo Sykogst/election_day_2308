@@ -44,23 +44,27 @@ RSpec.describe Election do
 
   describe '#candidates' do
     it 'returns array of all Candidate objects' do
-      expect(@election_2023.races).to eq([])
+      expect(@election_2023.candidates).to eq([])
 
       @election_2023.add_race(@race_tx_gov)
-      expect(@election_2023.races).to eq([@candidate1, @candidate2])
+      expect(@election_2023.candidates).to eq([@candidate1, @candidate2])
 
       @election_2023.add_race(@race_co_gov)
-      expect(@election_2023.races).to eq([@candidate1, @candidate2, @candidate3, @candidate4])
+      expect(@election_2023.candidates).to eq([@candidate1, @candidate2, @candidate3, @candidate4])
     end
   end
 
   describe '#vote_counts' do
     it 'returns has with candidate name and vote count' do
       @election_2023.add_race(@race_tx_gov)
-      expect(@election_2023.vote_counts).to eq({@candidate1.name = 0, @candidate2.name = 0})
+      expect(@election_2023.vote_counts).to eq({@candidate1.name => 0, @candidate2.name => 0})
 
       @election_2023.add_race(@race_co_gov)
-      expect(@election_2023.vote_counts).to eq({@candidate1.name = 0, @candidate2.name = 0, @candidate3.name = 0, @candidate3.name = 0})
+      expect(@election_2023.vote_counts).to eq({@candidate1.name => 0, @candidate2.name => 0, @candidate3.name => 0, @candidate4.name => 0})
+      
+      @candidate1.vote_for!
+      4.times {@candidate4.vote_for!}
+      expect(@election_2023.vote_counts).to eq({@candidate1.name => 1, @candidate2.name => 0, @candidate3.name => 0, @candidate4.name => 0})
     end
   end
 end
